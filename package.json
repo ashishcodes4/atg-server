@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ashishcodes4/atg-server#readme",
   "dependencies": {
+    "express": "^4.16.3",
     "mysql": "^2.15.0"
   }
 }
