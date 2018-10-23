@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
 const keys = require('./config/keys');
 
 //BodyParser Middleware
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Connect with the DB
@@ -21,13 +22,17 @@ mongoose
     console.log(err);
   });
 
+//Handlebar Middleware
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
 //Laod Routes
 const user = require('./routes/user');
 const product = require('./routes/product');
 
 //Index route
 app.get('/', (req, res) => {
-  res.send('home screen');
+  res.render('index');
 });
 
 //Use routes
