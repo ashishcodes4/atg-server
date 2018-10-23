@@ -1,31 +1,25 @@
 const express = require('express');
 const app = express();
-var mysql = require('mysql');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const keys = require('./config/keys');
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    port: 3306,
-    debug: true,
-    database: 'demo'
-});
 
-// mysql.createPool({
-//     connectionLimit : 500, //important
-//     host     : 'localhost',
-//     port     : 8889,
-//     user     : 'root',
-//     password : 'root',
-//     database : 'testing_db',
-//     debug    :  false,
-//     charset  : "utf8mb4_general_ci",
-//     supportBigNumbers: true,
-//     bigNumberStrings : true,
-// });
-  
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
+//Connect with the DB
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true})
+.then(() => {
+  console.log('connected to MongoDB')
+})
+.catch(err => {
+  console.log(err);
+})
 
+
+app.get('/', (req, res) => {
+  res.send('home screen');
+})
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`server started on port ${port}`);
+})
